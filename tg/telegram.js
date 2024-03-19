@@ -5,7 +5,6 @@ const bot = new TelegramBot(token, { polling: true });
 
 const src = require("./src/index")
 
-src.connector.init(bot)
 bot.on('message', async(msg) => {
     try {
         if (msg["reply_to_message"]) {
@@ -37,7 +36,7 @@ bot.on('callback_query', async function onCallbackQuery(callbackQuery) {
 
 async function router(data) {
     const uid = data.chat.id;
-    const req = tool.pathRouter(data.text);
+    const req = src.pathRouter(data.text);
     switch (req.command) {
         case "start":
             await src.menu.main(bot, uid, req, data);
@@ -56,10 +55,13 @@ async function router(data) {
 
 async function callBackRouter(data, action, opts) {
     const uid = data.chat.id;
-    const req = tool.pathRouter(action);
+    const req = src.pathRouter(action);
     switch (req.command) {
         case "menu":
             await src.menu.main(bot, uid, req, data);
+            break;
+        case "buy":
+            await src.menu.selectPaymentMethod(bot, uid, req, data);
             break;
         case "empty":
             return null;

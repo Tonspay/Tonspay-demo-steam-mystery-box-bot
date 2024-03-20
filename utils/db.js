@@ -75,7 +75,7 @@ async function payInvoice(id, callback) {
         }
     });
     const invoice = await getInvoiceById(id);
-    await db.collection(sInvoice).updateMany({
+    await db.collection(sCDKeys).updateMany({
         id: invoice.keyId
     }, {
         "$set": {

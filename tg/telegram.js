@@ -44,6 +44,15 @@ async function router(data) {
         case "menu":
             await src.menu.main(bot, uid, req, data);
             break;
+        case "buy_ton":
+            await src.menu.generateInvoices(bot, uid, req, data,0);
+            break;
+        case "buy_sol":
+            await src.menu.generateInvoices(bot, uid, req, data,1);
+            break;
+        case "buy_eth":
+            await src.menu.generateInvoices(bot, uid, req, data,2);
+            break;
         default:
             req.params = [
                 data.text

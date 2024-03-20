@@ -53,7 +53,7 @@ async function newInvoice(invoice,uid,email) {
                 email:email, //The email to recive msg.
                 callback : {},
                 status:0,//invoices status,
-                keyId:keyId,//Steam cd key id .
+                keyId:keyId.id,//Steam cd key id .
                 createTime:Date.now(),//Request time
             }
         );
@@ -74,8 +74,16 @@ async function payInvoice(id, callback) {
             callback : callback
         }
     });
+    const invoice = await getInvoiceById(id);
+    await db.collection(sInvoice).updateMany({
+        id: invoice.keyId
+    }, {
+        "$set": {
+            status: 1,
+        }
+    });
     await pool.close();
-    return true;
+    return await getKeysById(invoice.keyId);
 }
 
 

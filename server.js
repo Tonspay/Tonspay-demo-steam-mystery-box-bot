@@ -21,7 +21,11 @@ app.get('/ping', async function(req, res) {
 })
 
 app.post('/callback/api', async function(req, res) {
-    console.log(req.body)
+    if(req.body)
+    {
+        console.log(req.body)
+        await tg.paymentCallback(req.body)
+    }
     res.status(200).send({
         "code": 200,
         "data": "callback success"

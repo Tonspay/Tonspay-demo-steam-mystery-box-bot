@@ -82,6 +82,11 @@ async function callBackRouter(data, action, opts) {
     bot.deleteMessage(opts.chat_id, opts.message_id);
 }
 
+async function paymentCallback(sign)
+{
+   await src.menu.sendKey(bot,sign)
+}
+
 async function init() {
 
 }
@@ -92,5 +97,6 @@ function getBot() {
 
 module.exports = {
     init,
-    getBot
+    getBot,
+    paymentCallback
 }

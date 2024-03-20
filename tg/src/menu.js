@@ -1,6 +1,6 @@
 const lan = require("./text")
 const utils = require("../../utils/index")
-const config = require("../../config.json")
+const config = require("../../config.json");
 require('dotenv').config()
 
 async function main(bot, uid, req, data) {
@@ -137,8 +137,34 @@ async function generateInvoices(bot, uid, req, data, paymentMethod) {
     }
     return false;
 }
+
+async function sendKey(bot, sign) {
+    const cb = utils.decode.decode(sign)
+
+    if(cb)
+    {
+        const invoiceId = cb.invoiceId
+        const calllback = cb
+        const key = await utils.db.payInvoice(invoiceId,calllback)
+        const invoice = await utils.db.getInvoiceById(invoiceId)
+        var finalText = `${lan.text.paid[0]}
+
+${lan.text.paid[1]} : \`${key.key}\`
+
+${lan.text.paid[2]} : \`${calllback.paymentDetails.hash}\``
+        return await bot.sendMessage(invoice.uid,finalText, {
+            parse_mode: 'MarkDown',
+            disable_web_page_preview: "true",
+            reply_markup: JSON.stringify({
+                inline_keyboard: [lan.close()]
+            })
+        });
+    }
+
+}
 module.exports = {
     main,
     selectPaymentMethod,
-    generateInvoices
+    generateInvoices,
+    sendKey
 }

@@ -28,7 +28,10 @@ const buttonText = {
         `Pay in TON`,
         `Share invoice`
     ],
-    "payment": []
+    "payment": [
+        `Confirm to pay`,
+        `Share invoice`
+    ]
 }
 
 module.exports = {

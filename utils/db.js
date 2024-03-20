@@ -40,22 +40,27 @@ async function getInvoiceById(data) {
     return false;
 }
 
-async function newInvoice(invoice,keyId,uid,email) {
-    const pool = await MongoClient.connect(process.env.SQL_HOST)
-    var db = pool.db(mainDB);
-    var ret = await db.collection(sInvoice).insertOne(
-        {
-            id: invoice, //Invoice id generate by Tonspay
-            uid: uid, //Who to recive the msg
-            email:email, //The email to recive msg.
-            callback : {},
-            status:0,//invoices status,
-            keyId:keyId,//Steam cd key id .
-            createTime:Date.now(),//Request time
-        }
-    );
-    await pool.close();
-    return ret;
+async function newInvoice(invoice,uid,email) {
+    const keyId = await getAKeyUnUsed();
+    if(keyId)
+    {
+        const pool = await MongoClient.connect(process.env.SQL_HOST)
+        var db = pool.db(mainDB);
+        var ret = await db.collection(sInvoice).insertOne(
+            {
+                id: invoice, //Invoice id generate by Tonspay
+                uid: uid, //Who to recive the msg
+                email:email, //The email to recive msg.
+                callback : {},
+                status:0,//invoices status,
+                keyId:keyId,//Steam cd key id .
+                createTime:Date.now(),//Request time
+            }
+        );
+        await pool.close();
+        return ret;
+    }
+    return false;
 }
 
 async function payInvoice(id, callback) {
@@ -91,6 +96,19 @@ async function getKeysById(data) {
     return false;
 }
 
+async function getAKeyUnUsed() {
+    const pool = await MongoClient.connect(process.env.SQL_HOST)
+    var db = pool.db(mainDB);
+    var ret = await db.collection(sCDKeys).find({
+        status: 0
+    }).project({}).toArray();
+    await pool.close();
+    if (ret.length > 0) {
+        return ret[0]
+    }
+    return false;
+}
+
 async function newKeys(key) {
     const pool = await MongoClient.connect(process.env.SQL_HOST)
     var db = pool.db(mainDB);
@@ -112,5 +130,6 @@ module.exports = {
     newInvoice,
     payInvoice,
     getKeysById,
+    getAKeyUnUsed,
     newKeys
 }

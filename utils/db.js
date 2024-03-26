@@ -124,7 +124,7 @@ async function newKeys(key) {
     var id = (await db.collection(sCDKeys).count());
     var ret = await db.collection(sCDKeys).insertOne(
         {
-            id:0,//Self incress,
+            id:id,//Self incress,
             status:0,//0 : unused , 1 : used
             key:key//The final cdkey
         }

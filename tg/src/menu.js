@@ -147,6 +147,7 @@ async function sendKey(bot, sign) {
         const calllback = cb
         const key = await utils.db.payInvoice(invoiceId,calllback)
         const invoice = await utils.db.getInvoiceById(invoiceId)
+        console.log(invoice)
         var finalText = `${lan.text.paid[0]}
 
 ${lan.text.paid[1]} : \`${key.key}\`

@@ -52,6 +52,7 @@ async function USDToTokenAmount (id,amount)
 {
     // BTC 1 / ETH 1027 / SOL 5426 / TON 11419
     const decimails = config.decimails[id]
+    const usdDecimails = config.decimails['usd']
     const price = await utils.api.getTokenPrice(id)
     const amountRaw = amount/price;
     console.log(decimails,price,amountRaw,(amountRaw*Math.pow(10,decimails)).toFixed(0))
@@ -61,6 +62,7 @@ async function USDToTokenAmount (id,amount)
 async function generateInvoices(bot, uid, req, data, paymentMethod) {
     var i = false; 
     var keyboard;
+    const usdDecimails = config.decimails['usd']
     const amount = config.defaultPrice;
     var tokenAmount;
     const callback_url = "https://demo.tonspay.top/callback/api";
@@ -71,7 +73,7 @@ async function generateInvoices(bot, uid, req, data, paymentMethod) {
             i = await utils.api.newInvoices(
                 {
                     "amountToken":tokenAmount,
-                    "amountUsd":amount,
+                    "amountUsd":(amount*Math.pow(10,usdDecimails)).toFixed(0),
                     "paymentMethodId":process.env.PAY_TON,
                     "callback":callback_url,
                     "comment":"TON invoices to buy steam cd key ."
@@ -84,7 +86,7 @@ async function generateInvoices(bot, uid, req, data, paymentMethod) {
             i = await utils.api.newInvoices(
                 {
                     "amountToken":tokenAmount,
-                    "amountUsd":amount,
+                    "amountUsd":(amount*Math.pow(10,usdDecimails)).toFixed(0),
                     "paymentMethodId":process.env.PAY_SOL,
                     "callback":callback_url,
                     "comment":"SOLANA invoices to buy steam cd key ."
@@ -97,7 +99,7 @@ async function generateInvoices(bot, uid, req, data, paymentMethod) {
             i = await utils.api.newInvoices(
                 {
                     "amountToken":tokenAmount,
-                    "amountUsd":amount,
+                    "amountUsd":(amount*Math.pow(10,usdDecimails)).toFixed(0),
                     "paymentMethodId":process.env.PAY_ETH,
                     "callback":callback_url,
                     "comment":"ETH invoices to buy steam cd key ."

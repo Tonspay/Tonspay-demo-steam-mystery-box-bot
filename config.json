@@ -2,7 +2,8 @@
     "decimails":{
         "1027":18,
         "5426":9,
-        "11419":8
+        "11419":9,
+        "usd":4
     },
-    "defaultPrice":1
+    "defaultPrice":0.1
 }

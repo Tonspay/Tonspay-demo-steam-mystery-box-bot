@@ -4,7 +4,7 @@ async function mock_key_insert()
 {
     for(var i = 0 ; i < 100 ; i++)
     {
-        await utils.db.newKeys(Date.now())
+        await utils.db.newKeys("VMIA8-CAJVZ-4G5IT")
     }
 }
 

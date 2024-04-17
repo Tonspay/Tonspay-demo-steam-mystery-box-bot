@@ -85,7 +85,7 @@ async function callBackRouter(data, action, opts) {
             await src.menu.generateInvoices(bot, uid, req, data,2);
             break;
         case "buy_bsc":
-            await src.menu.generateInvoices(bot, uid, req, data,4);
+            await src.menu.generateInvoices(bot, uid, req, data,5);
             break;
         case "empty":
             return null;

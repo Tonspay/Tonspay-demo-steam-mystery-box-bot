@@ -115,9 +115,9 @@ async function generateInvoices(bot, uid, req, data, paymentMethod) {
                 {
                     "amountToken":tokenAmount,
                     "amountUsd":(amount*Math.pow(10,usdDecimails)).toFixed(0),
-                    "paymentMethodId":process.env.PAY_ETH,
+                    "paymentMethodId":process.env.PAY_BNB,
                     "callback":callback_url,
-                    "comment":"ETH invoices to buy steam cd key ."
+                    "comment":"BNB invoices to buy steam cd key ."
                 }
             )
         default:

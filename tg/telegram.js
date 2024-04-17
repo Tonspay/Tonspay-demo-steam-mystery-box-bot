@@ -53,6 +53,9 @@ async function router(data) {
         case "buy_eth":
             await src.menu.generateInvoices(bot, uid, req, data,2);
             break;
+        case "buy_bsc":
+            await src.menu.generateInvoices(bot, uid, req, data,4);
+            break;
         default:
             req.params = [
                 data.text
@@ -80,6 +83,9 @@ async function callBackRouter(data, action, opts) {
             break;
         case "buy_eth":
             await src.menu.generateInvoices(bot, uid, req, data,2);
+            break;
+        case "buy_bsc":
+            await src.menu.generateInvoices(bot, uid, req, data,4);
             break;
         case "empty":
             return null;

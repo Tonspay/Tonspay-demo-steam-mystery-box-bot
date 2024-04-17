@@ -40,6 +40,9 @@ async function selectPaymentMethod(bot, uid, req, data) {
                     "callback_data": "/buy_eth"
                 }],
                 [{
+                    "text": lan.buttonText.purchas[4],
+                    "callback_data": "/buy_bsc"
+                },{
                     "text": lan.buttonText.purchas[2],
                     "callback_data": "/buy_ton"
                 }]
@@ -50,7 +53,7 @@ async function selectPaymentMethod(bot, uid, req, data) {
 
 async function USDToTokenAmount (id,amount)
 {
-    // BTC 1 / ETH 1027 / SOL 5426 / TON 11419
+    // BTC 1 / ETH 1027 / SOL 5426 / TON 11419 // bnb 1839
     const decimails = config.decimails[id]
     const usdDecimails = config.decimails['usd']
     const price = await utils.api.getTokenPrice(id)
@@ -106,6 +109,17 @@ async function generateInvoices(bot, uid, req, data, paymentMethod) {
                 }
             )
             break
+        case 5:
+            tokenAmount = await USDToTokenAmount(1839,amount);
+            i = await utils.api.newInvoices(
+                {
+                    "amountToken":tokenAmount,
+                    "amountUsd":(amount*Math.pow(10,usdDecimails)).toFixed(0),
+                    "paymentMethodId":process.env.PAY_ETH,
+                    "callback":callback_url,
+                    "comment":"ETH invoices to buy steam cd key ."
+                }
+            )
         default:
             break;
     }

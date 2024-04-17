@@ -32,7 +32,8 @@ const buttonText = {
         `Pay in SOL`,
         `Pay in ETH`,
         `Pay in TON`,
-        `Share invoice`
+        `Share invoice`,
+        `Pay in BSC`,
     ],
     "payment": [
         `Confirm to pay`,
